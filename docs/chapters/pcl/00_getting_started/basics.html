@@ -1,0 +1,411 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2. Basics &mdash; Computer Vision 0.0.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/override.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="prev" title="1. Tutorials" href="tutorials.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Computer Vision
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OpenCV_</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../opencv/00_getting_started/tutorials.html">1. Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">PCL_</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">1. Tutorials</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. Basics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#first-example">2.1. First example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-structures">2.2. Data structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#algorithms-design-patterns">2.3. Algorithms design patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pcd-file-format">2.4. PCD file format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pcl-and-ros">2.5. PCL and ROS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pcl-and-qt">2.6. PCL and Qt</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Computer Vision</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+      <li>2. Basics</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/chapters/pcl/00_getting_started/basics.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="basics">
+<h1>2. Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h1>
+<p>The source code of PCL library can be found on github:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">PointCloudLibrary</span><span class="o">/</span><span class="n">pcl</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>In the source directory you can find <code class="docutils literal notranslate"><span class="pre">examples</span></code> and <code class="docutils literal notranslate"><span class="pre">tests</span></code>. In the <code class="docutils literal notranslate"><span class="pre">doc</span></code> directory you can find the <code class="docutils literal notranslate"><span class="pre">tutorials</span></code> source code as well as the explanation in <code class="docutils literal notranslate"><span class="pre">reStructuredText</span></code>. The <a class="reference external" href="http://www.pointclouds.org/documentation/tutorials/index.php">tutorials</a> are also accessible on the <a class="reference external" href="http://www.pointclouds.org">PCL</a> website under <a class="reference external" href="http://www.pointclouds.org/documentation/">documentation</a>.</p>
+<div class="section" id="first-example">
+<h2>2.1. First example<a class="headerlink" href="#first-example" title="Permalink to this headline">¶</a></h2>
+<p>Read a point file, pcd, and wiew the content.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pcl/io/pcd_io.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pcl/point_types.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pcl/visualization/cloud_viewer.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">pcl</span><span class="o">::</span><span class="n">PointCloud</span><span class="o">&lt;</span><span class="n">pcl</span><span class="o">::</span><span class="n">PointXYZ</span><span class="o">&gt;::</span><span class="n">Ptr</span> <span class="n">cloud</span><span class="p">(</span><span class="k">new</span> <span class="n">pcl</span><span class="o">::</span><span class="n">PointCloud</span><span class="o">&lt;</span><span class="n">pcl</span><span class="o">::</span><span class="n">PointXYZ</span><span class="o">&gt;</span><span class="p">);</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">pcl</span><span class="o">::</span><span class="n">io</span><span class="o">::</span><span class="n">loadPCDFile</span><span class="o">&lt;</span><span class="n">pcl</span><span class="o">::</span><span class="n">PointXYZ</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;test_pcd.pcd&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">cloud</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1">//* load the file</span>
+  <span class="p">{</span>
+    <span class="n">PCL_ERROR</span><span class="p">(</span><span class="s">&quot;Couldn&#39;t read file test_pcd.pcd </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Loaded &quot;</span>
+            <span class="o">&lt;&lt;</span> <span class="n">cloud</span><span class="o">-&gt;</span><span class="n">width</span> <span class="o">*</span> <span class="n">cloud</span><span class="o">-&gt;</span><span class="n">height</span>
+            <span class="o">&lt;&lt;</span> <span class="s">&quot; data points from test_pcd.pcd with the following fields: &quot;</span>
+            <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">cloud</span><span class="o">-&gt;</span><span class="n">points</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;    &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">cloud</span><span class="o">-&gt;</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span>
+              <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">cloud</span><span class="o">-&gt;</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span>
+              <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">cloud</span><span class="o">-&gt;</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">z</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+  <span class="n">pcl</span><span class="o">::</span><span class="n">visualization</span><span class="o">::</span><span class="n">CloudViewer</span> <span class="n">viewer</span><span class="p">(</span><span class="s">&quot;Simple Cloud Viewer&quot;</span><span class="p">);</span>
+  <span class="n">viewer</span><span class="p">.</span><span class="n">showCloud</span><span class="p">(</span><span class="n">cloud</span><span class="p">);</span>
+  <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">viewer</span><span class="p">.</span><span class="n">wasStopped</span><span class="p">())</span>
+  <span class="p">{</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span> <span class="s">2.8</span> <span class="s">FATAL_ERROR</span><span class="p">)</span>
+
+<span class="nb">project</span><span class="p">(</span><span class="s">FirstExample</span><span class="p">)</span>
+
+<span class="nb">find_package</span><span class="p">(</span><span class="s">PCL</span> <span class="s">1.2</span> <span class="s">REQUIRED</span><span class="p">)</span>
+
+<span class="nb">include_directories</span><span class="p">(</span><span class="o">${</span><span class="nv">PCL_INCLUDE_DIRS</span><span class="o">}</span><span class="p">)</span>
+<span class="nb">link_directories</span><span class="p">(</span><span class="o">${</span><span class="nv">PCL_LIBRARY_DIRS</span><span class="o">}</span><span class="p">)</span>
+<span class="nb">add_definitions</span><span class="p">(</span><span class="o">${</span><span class="nv">PCL_DEFINITIONS</span><span class="o">}</span><span class="p">)</span>
+
+<span class="nb">add_executable</span> <span class="p">(</span><span class="s">first_example</span> <span class="s">first_example.cpp</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span> <span class="p">(</span><span class="s">first_example</span> <span class="o">${</span><span class="nv">PCL_LIBRARIES</span><span class="o">}</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To build and run the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">build</span>
+<span class="n">cd</span> <span class="n">build</span>
+<span class="n">cmake</span> <span class="o">..</span>
+<span class="n">make</span>
+
+<span class="o">./</span><span class="n">first_example</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="data-structures">
+<h2>2.2. Data structures<a class="headerlink" href="#data-structures" title="Permalink to this headline">¶</a></h2>
+<p>The main data structure in PCL is the template class <code class="docutils literal notranslate"><span class="pre">pcl::PointCloud&lt;pcl::PointTemplate&gt;</span></code>. The template types could be:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">pcl::PointXYZ</span></code>: 3D XYZ</li>
+<li><code class="docutils literal notranslate"><span class="pre">pcl::PointXYZI</span></code>: 3D XYZ plus intensity of the point</li>
+<li><code class="docutils literal notranslate"><span class="pre">pcl::PointXYZRGB</span></code>: 3D XYZ plus rgb colors</li>
+<li><code class="docutils literal notranslate"><span class="pre">pcl::Normal</span></code>: it represents the surface normal at a given point and a measure of its curvature</li>
+<li><code class="docutils literal notranslate"><span class="pre">pcl::PointNormal</span></code>: 3D XYZ coordinates and the surface normal</li>
+</ul>
+</div></blockquote>
+<p>Refer to the documentation for a complete list of supported point types. Note that you can define you own data types.</p>
+<p>Create a <code class="docutils literal notranslate"><span class="pre">PointCloud</span></code> object with <code class="docutils literal notranslate"><span class="pre">PointXYZ</span></code> point type:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pcl</span><span class="p">::</span><span class="n">PointCloud</span><span class="o">&lt;</span><span class="n">pcl</span><span class="p">::</span><span class="n">PointXYZ</span><span class="o">&gt;</span> <span class="n">cloud</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Create a <code class="docutils literal notranslate"><span class="pre">Boost</span></code> pointer</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pcl</span><span class="p">::</span><span class="n">PointCloud</span><span class="o">&lt;</span><span class="n">pcl</span><span class="p">::</span><span class="n">PointXYZ</span><span class="o">&gt;</span><span class="p">::</span><span class="n">Ptr</span> <span class="n">cloud</span> <span class="p">(</span><span class="n">new</span> <span class="n">pcl</span><span class="p">::</span><span class="n">PointCloud</span><span class="o">&lt;</span><span class="n">pcl</span><span class="p">::</span><span class="n">PointXYZ</span><span class="o">&gt;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="algorithms-design-patterns">
+<h2>2.3. Algorithms design patterns<a class="headerlink" href="#algorithms-design-patterns" title="Permalink to this headline">¶</a></h2>
+<p>The following code read point cloud data, apply a filter then save the filtered data to a file.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pcl/io/pcd_io.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pcl/point_types.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pcl/filters/statistical_outlier_removal.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span>
+<span class="nf">main</span> <span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">pcl</span><span class="o">::</span><span class="n">PointCloud</span><span class="o">&lt;</span><span class="n">pcl</span><span class="o">::</span><span class="n">PointXYZ</span><span class="o">&gt;::</span><span class="n">Ptr</span> <span class="n">cloud</span> <span class="p">(</span><span class="k">new</span> <span class="n">pcl</span><span class="o">::</span><span class="n">PointCloud</span><span class="o">&lt;</span><span class="n">pcl</span><span class="o">::</span><span class="n">PointXYZ</span><span class="o">&gt;</span><span class="p">);</span>
+  <span class="n">pcl</span><span class="o">::</span><span class="n">PointCloud</span><span class="o">&lt;</span><span class="n">pcl</span><span class="o">::</span><span class="n">PointXYZ</span><span class="o">&gt;::</span><span class="n">Ptr</span> <span class="n">cloud_filtered</span> <span class="p">(</span><span class="k">new</span> <span class="n">pcl</span><span class="o">::</span><span class="n">PointCloud</span><span class="o">&lt;</span><span class="n">pcl</span><span class="o">::</span><span class="n">PointXYZ</span><span class="o">&gt;</span><span class="p">);</span>
+
+  <span class="c1">// Fill in the cloud data</span>
+  <span class="n">pcl</span><span class="o">::</span><span class="n">PCDReader</span> <span class="n">reader</span><span class="p">;</span>
+  <span class="c1">// Replace the path below with the path where you saved your file</span>
+  <span class="n">reader</span><span class="p">.</span><span class="n">read</span><span class="o">&lt;</span><span class="n">pcl</span><span class="o">::</span><span class="n">PointXYZ</span><span class="o">&gt;</span> <span class="p">(</span><span class="s">&quot;table_scene_lms400.pcd&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">cloud</span><span class="p">);</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Cloud before filtering: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">cloud</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+  <span class="c1">// Create the filtering object</span>
+  <span class="n">pcl</span><span class="o">::</span><span class="n">StatisticalOutlierRemoval</span><span class="o">&lt;</span><span class="n">pcl</span><span class="o">::</span><span class="n">PointXYZ</span><span class="o">&gt;</span> <span class="n">sor</span><span class="p">;</span>
+  <span class="n">sor</span><span class="p">.</span><span class="n">setInputCloud</span> <span class="p">(</span><span class="n">cloud</span><span class="p">);</span>
+  <span class="n">sor</span><span class="p">.</span><span class="n">setMeanK</span> <span class="p">(</span><span class="mi">50</span><span class="p">);</span>
+  <span class="n">sor</span><span class="p">.</span><span class="n">setStddevMulThresh</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">);</span>
+  <span class="n">sor</span><span class="p">.</span><span class="n">filter</span> <span class="p">(</span><span class="o">*</span><span class="n">cloud_filtered</span><span class="p">);</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Cloud after filtering: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">cloud_filtered</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+  <span class="n">pcl</span><span class="o">::</span><span class="n">PCDWriter</span> <span class="n">writer</span><span class="p">;</span>
+  <span class="n">writer</span><span class="p">.</span><span class="n">write</span><span class="o">&lt;</span><span class="n">pcl</span><span class="o">::</span><span class="n">PointXYZ</span><span class="o">&gt;</span> <span class="p">(</span><span class="s">&quot;table_scene_lms400_inliers.pcd&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">cloud_filtered</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+
+  <span class="n">sor</span><span class="p">.</span><span class="n">setNegative</span> <span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+  <span class="n">sor</span><span class="p">.</span><span class="n">filter</span> <span class="p">(</span><span class="o">*</span><span class="n">cloud_filtered</span><span class="p">);</span>
+  <span class="n">writer</span><span class="p">.</span><span class="n">write</span><span class="o">&lt;</span><span class="n">pcl</span><span class="o">::</span><span class="n">PointXYZ</span><span class="o">&gt;</span> <span class="p">(</span><span class="s">&quot;table_scene_lms400_outliers.pcd&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">cloud_filtered</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Algorithms in <code class="docutils literal notranslate"><span class="pre">PCL</span></code> are almost all templated and follow the same structure.
+First an algorithm object is created, parameters are set using setter accessors and then the result is accessed.</p>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">pcl::StatisticalOutlierRemoval</span></code> filter is created. The number of neighbors to analyze for each point is set to 50, and the standard deviation multiplier to 1.
+What this means is that all points who have a distance larger than 1 standard deviation of the mean distance to the query point will be marked as outliers and removed. The output is computed and stored in cloud_filtered.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create the filtering object</span>
+<span class="n">pcl</span><span class="o">::</span><span class="n">StatisticalOutlierRemoval</span><span class="o">&lt;</span><span class="n">pcl</span><span class="o">::</span><span class="n">PointXYZ</span><span class="o">&gt;</span> <span class="n">sor</span><span class="p">;</span>
+<span class="n">sor</span><span class="p">.</span><span class="n">setInputCloud</span> <span class="p">(</span><span class="n">cloud</span><span class="p">);</span>
+<span class="n">sor</span><span class="p">.</span><span class="n">setMeanK</span> <span class="p">(</span><span class="mi">50</span><span class="p">);</span>
+<span class="n">sor</span><span class="p">.</span><span class="n">setStddevMulThresh</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">);</span>
+<span class="n">sor</span><span class="p">.</span><span class="n">filter</span> <span class="p">(</span><span class="o">*</span><span class="n">cloud_filtered</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Changing the filter parameters we can get the outliers:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">sor</span><span class="p">.</span><span class="n">setNegative</span> <span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+<span class="n">sor</span><span class="p">.</span><span class="n">filter</span> <span class="p">(</span><span class="o">*</span><span class="n">cloud_filtered</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Refer to the official tutorial, <strong>Writing a new PCL class</strong>, to understand better how algorithm are designed.</p>
+</div>
+<div class="section" id="pcd-file-format">
+<h2>2.4. PCD file format<a class="headerlink" href="#pcd-file-format" title="Permalink to this headline">¶</a></h2>
+<p>Different file formats are supported by <code class="docutils literal notranslate"><span class="pre">PCL</span></code>. The <code class="docutils literal notranslate"><span class="pre">PCD</span></code> that is <code class="docutils literal notranslate"><span class="pre">Point</span> <span class="pre">Cloud</span> <span class="pre">Data</span></code> can be found in binary format or in ASCII format.
+The following snippet represent a pcd file where are saved 5 point clouds of type x,y,z.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># .PCD v.5 - Point Cloud Data file format</span>
+<span class="n">FIELDS</span> <span class="n">x</span> <span class="n">y</span> <span class="n">z</span>
+<span class="n">SIZE</span> <span class="mi">4</span> <span class="mi">4</span> <span class="mi">4</span>
+<span class="n">TYPE</span> <span class="n">F</span> <span class="n">F</span> <span class="n">F</span>
+<span class="n">WIDTH</span> <span class="mi">5</span>
+<span class="n">HEIGHT</span> <span class="mi">1</span>
+<span class="n">POINTS</span> <span class="mi">5</span>
+<span class="n">DATA</span> <span class="n">ascii</span>
+<span class="mf">0.35222</span> <span class="o">-</span><span class="mf">0.15188</span> <span class="o">-</span><span class="mf">0.1064</span>
+<span class="o">-</span><span class="mf">0.39741</span> <span class="o">-</span><span class="mf">0.47311</span> <span class="mf">0.2926</span>
+<span class="o">-</span><span class="mf">0.7319</span> <span class="mf">0.6671</span> <span class="mf">0.4413</span>
+<span class="o">-</span><span class="mf">0.73477</span> <span class="mf">0.85458</span> <span class="o">-</span><span class="mf">0.036173</span>
+<span class="o">-</span><span class="mf">0.4607</span> <span class="o">-</span><span class="mf">0.27747</span> <span class="o">-</span><span class="mf">0.91676</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pcl-and-ros">
+<h2>2.5. PCL and ROS<a class="headerlink" href="#pcl-and-ros" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="pcl-and-qt">
+<h2>2.6. PCL and Qt<a class="headerlink" href="#pcl-and-qt" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="tutorials.html" class="btn btn-neutral" title="1. Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Abed.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.0.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

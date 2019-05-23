@@ -1,0 +1,300 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Removing outliers using a StatisticalOutlierRemoval filter &mdash; Computer Vision 0.0.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/override.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Computer Vision
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OpenCV_</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../chapters/opencv/00_getting_started/tutorials.html">1. Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">PCL_</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../chapters/pcl/tutorials/tutorials.html">1. Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../chapters/pcl/tutorials/basics.html">2. Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../chapters/pcl/tutorials/IO.html">3. IO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../chapters/pcl/tutorials/visualization.html">4. Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../chapters/pcl/tutorials/filtering.html">5. Filtering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../chapters/pcl/tutorials/segmentation.html">6. segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../chapters/pcl/tutorials/recognition.html">7. Recognition</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Computer Vision</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Removing outliers using a StatisticalOutlierRemoval filter</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/code/pcl/statistical_removal/statistical_outlier.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="removing-outliers-using-a-statisticaloutlierremoval-filter">
+<span id="statistical-outlier-removal"></span><h1>Removing outliers using a StatisticalOutlierRemoval filter<a class="headerlink" href="#removing-outliers-using-a-statisticaloutlierremoval-filter" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial we will learn how to remove noisy measurements, e.g. outliers,
+from a point cloud dataset using statistical analysis techniques.</p>
+<iframe title="Removing outliers using a StatisticalOutlierRemoval filter" width="480" height="390" src="http://www.youtube.com/embed/RjQPp2_GRnI?rel=0" frameborder="0" allowfullscreen></iframe></div>
+<div class="section" id="background">
+<h1>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h1>
+<p>Laser scans typically generate point cloud datasets of varying point densities.
+Additionally, measurement errors lead to sparse outliers which corrupt the
+results even more.  This complicates the estimation of local point cloud
+characteristics such as surface normals or curvature changes, leading to
+erroneous values, which in turn might cause point cloud registration failures.
+Some of these irregularities can be solved by performing a statistical analysis
+on each point’s neighborhood, and trimming those which do not meet a certain
+criteria.  Our sparse outlier removal is based on the computation of the
+distribution of point to neighbors distances in the input dataset. For each
+point, we compute the mean distance from it to all its neighbors. By assuming
+that the resulted distribution is Gaussian with a mean and a standard
+deviation, all points whose mean distances are outside an interval defined by
+the global distances mean and standard deviation can be considered as outliers
+and trimmed from the dataset.</p>
+<p>The following picture shows the effects of the sparse outlier analysis and
+removal: the original dataset is shown on the left, while the resultant one on
+the right. The graphic shows the mean k-nearest neighbor distances in a point
+neighborhood before and after filtering.</p>
+<img alt="code/pcl/statistical_removal/images/statistical_removal_2.jpg" src="code/pcl/statistical_removal/images/statistical_removal_2.jpg" />
+</div>
+<div class="section" id="the-code">
+<h1>The code<a class="headerlink" href="#the-code" title="Permalink to this headline">¶</a></h1>
+<p>First, download the dataset <a class="reference external" href="https://raw.github.com/PointCloudLibrary/data/master/tutorials/table_scene_lms400.pcd">table_scene_lms400.pcd</a>
+and save it somewhere to disk.</p>
+<p>Then, create a file, let’s say, <code class="docutils literal notranslate"><span class="pre">statistical_removal.cpp</span></code> in your favorite
+editor, and place the following inside it:</p>
+</div>
+<div class="section" id="the-explanation">
+<h1>The explanation<a class="headerlink" href="#the-explanation" title="Permalink to this headline">¶</a></h1>
+<p>Now, let’s break down the code piece by piece.</p>
+<p>The following lines of code will read the point cloud data from disk.</p>
+<p>Then, a <em>pcl::StatisticalOutlierRemoval</em> filter is created. The number of
+neighbors to analyze for each point is set to 50, and the standard deviation
+multiplier to 1. What this means is that all points who have a distance larger
+than 1 standard deviation of the mean distance to the query point will be
+marked as outliers and removed. The output is computed and stored in
+<em>cloud_filtered</em>.</p>
+<p>The remaining data (inliers) is written to disk for later inspection.</p>
+<p>Then, the filter is called with the same parameters, but with the output
+negated, to obtain the outliers (e.g., the points that were filtered).</p>
+<p>And the data is written back to disk.</p>
+</div>
+<div class="section" id="compiling-and-running-the-program">
+<h1>Compiling and running the program<a class="headerlink" href="#compiling-and-running-the-program" title="Permalink to this headline">¶</a></h1>
+<p>Add the following lines to your CMakeLists.txt file:</p>
+<p>After you have made the executable, you can run it. Simply do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./statistical_removal
+</pre></div>
+</div>
+<p>You will see something similar to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Cloud</span> <span class="n">before</span> <span class="n">filtering</span><span class="p">:</span>
+<span class="n">header</span><span class="p">:</span>
+<span class="n">seq</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">stamp</span><span class="p">:</span> <span class="mf">0.000000000</span>
+<span class="n">frame_id</span><span class="p">:</span>
+<span class="n">points</span><span class="p">[]:</span> <span class="mi">460400</span>
+<span class="n">width</span><span class="p">:</span> <span class="mi">460400</span>
+<span class="n">height</span><span class="p">:</span> <span class="mi">1</span>
+<span class="n">is_dense</span><span class="p">:</span> <span class="mi">0</span>
+
+<span class="n">Cloud</span> <span class="n">after</span> <span class="n">filtering</span><span class="p">:</span>
+<span class="n">header</span><span class="p">:</span>
+<span class="n">seq</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">stamp</span><span class="p">:</span> <span class="mf">0.000000000</span>
+<span class="n">frame_id</span><span class="p">:</span>
+<span class="n">points</span><span class="p">[]:</span> <span class="mi">429398</span>
+<span class="n">width</span><span class="p">:</span> <span class="mi">429398</span>
+<span class="n">height</span><span class="p">:</span> <span class="mi">1</span>
+<span class="n">is_dense</span><span class="p">:</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Abed.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.0.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
